@@ -92,7 +92,9 @@
     //Add the tickbox accessory
     if (toDoItem.completed){
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else cell.accessoryType = UITableViewCellAccessoryNone;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     return cell;
 }
@@ -155,12 +157,9 @@
     XYZToDoItem *tappedItem = [self.toDoItems objectAtIndex:indexPath.row]; //Get the indexed item in the array
     
     //Toggle completion status
-    if(tappedItem.completed)
-        tappedItem.completed = false;
-    else
-        tappedItem.completed = true;
+    tappedItem.completed = !tappedItem.completed;
     
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 @end
