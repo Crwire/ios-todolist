@@ -71,14 +71,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [self.toDoItems count];
 }
@@ -91,6 +89,10 @@
     // Configure the cell...
     XYZToDoItem *toDoItem = [self.toDoItems objectAtIndex:indexPath.row];
     cell.textLabel.text = toDoItem.itemName;
+    //Add the tickbox accessory
+    if (toDoItem.completed){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else cell.accessoryType = UITableViewCellAccessoryNone;
     
     return cell;
 }
@@ -144,5 +146,21 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Table view delegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO]; //Deselect the cell
+    XYZToDoItem *tappedItem = [self.toDoItems objectAtIndex:indexPath.row]; //Get the indexed item in the array
+    
+    //Toggle completion status
+    if(tappedItem.completed)
+        tappedItem.completed = false;
+    else
+        tappedItem.completed = true;
+    
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+}
 
 @end
